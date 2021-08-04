@@ -1,36 +1,9 @@
-version = "2021.1"
+package _self.templates
 
-project {
+import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.powerShell
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures.swabra
 
-    buildType(BuildAndTestPullRequest)
-    buildType(RestoreNugetAndRunUnit)
-
-    template(CompileAndRunUnitTestsTemplate)
-}
-
-object BuildAndTestPullRequest : BuildType({
-    templates(CompileAndRunUnitTestsTemplate)
-    name = "Build and test pull request"
-
-    triggers {
-        vcs {
-            id = "TRIGGER_5"
-            branchFilter = "+:refs/pull/*/head"
-        }
-    }
-})
-
-object RestoreNugetAndRunUnit : BuildType({
-    templates(CompileAndRunUnitTestsTemplate)
-    name = "Compile and Run Unit Tests"
-
-    triggers {
-        vcs {
-            id = "TRIGGER_4"
-            branchFilter = "+:<default>"
-        }
-    }
-})
 
 object CompileAndRunUnitTestsTemplate : Template({
     name = "Compile and Run Unit Tests Template"
@@ -40,7 +13,7 @@ object CompileAndRunUnitTestsTemplate : Template({
     }
 
     vcs {
-        root(DslContext.settingsRoot)
+        root(RelativeId("EdFiXStudentEngagement"))
     }
 
     steps {
@@ -72,3 +45,10 @@ object CompileAndRunUnitTestsTemplate : Template({
             }
         }
     }
+
+    features {
+        swabra {
+            id = "swabra"
+        }
+    }
+})
